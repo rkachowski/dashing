@@ -81,6 +81,7 @@ get '/:dashboard' do
     file = File.join(settings.views, "#{params[:dashboard]}.#{suffix}")
     return render(suffix.to_sym, params[:dashboard].to_sym) if File.exist? file
   end
+  pass
 end
 
 post '/dashboards/:id' do
