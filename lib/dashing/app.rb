@@ -79,7 +79,8 @@ get '/:dashboard' do
   protected!
   tilt_html_engines.each do |suffix, _|
     file = File.join(settings.views, "#{params[:dashboard]}.#{suffix}")
-    return render(suffix.to_sym, params[:dashboard].to_sym) if File.exist? file
+    locals = settings.dashing_locals
+    return render(suffix.to_sym, params[:dashboard].to_sym, {:locals => locals}) if File.exist? file
   end
   pass
 end
@@ -167,6 +168,7 @@ def require_glob(relative_glob)
     require file
   end
 end
+
 
 settings_file = File.join(settings.root, 'config/settings.rb')
 require settings_file if File.exists?(settings_file)
