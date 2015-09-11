@@ -57,14 +57,6 @@ at_exit do
   File.write(settings.history_file, settings.history.to_yaml)
 end
 
-get '/' do
-  protected!
-  dashboard = settings.default_dashboard || first_dashboard
-  raise Exception.new('There are no dashboards available') if not dashboard
-
-  redirect "/" + dashboard
-end
-
 get '/events', provides: 'text/event-stream' do
   protected!
   response.headers['X-Accel-Buffering'] = 'no' # Disable buffering for nginx
